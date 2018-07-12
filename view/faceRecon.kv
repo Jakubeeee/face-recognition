@@ -1,0 +1,84 @@
+ScreenManagement:
+    MainScreen:
+    CameraScreen:
+    InputUsernameScreen:
+    ComparingScreen:
+
+<MainScreen>:
+    name: "main_screen"
+    MainLayout:
+
+<MainLayout>:
+    orientation: 'vertical'
+    Button:
+        id: recognize_button
+        text: "Recognize"
+        on_press: root.on_recognize_button_pressed()
+        on_press: app.root.switch_screen("camera_screen")
+    Button:
+        id: add_new_user_button
+        text: "Add new user"
+        on_press: root.on_add_new_user_button_pressed()
+        on_press: app.root.switch_screen("camera_screen")
+
+<CameraScreen>:
+    name: "camera_screen"
+    CameraLayout:
+
+<CameraLayout>:
+    orientation: 'vertical'
+    Camera:
+        id: camera
+        resolution: (640, 480)
+        play: False
+    ToggleButton:
+        id: toggle_camera_button
+        text: 'Play'
+        on_press: camera.play = not camera.play
+    Button:
+        id: capture_image_button
+        text: 'Capture'
+        on_press: root.on_capture_image_button_pressed()
+    Button:
+        id: cancel_capture_button
+        text: 'Cancel'
+        on_press: app.root.switch_screen("main_screen")
+        on_press: camera.play = False
+
+<InputUsernameScreen>:
+    name: "input_username_screen"
+    InputUsernameLayout:
+
+<InputUsernameLayout>:
+    orientation: 'vertical'
+    Label:
+        text: 'Enter your username'
+    TextInput:
+        id: username_text_input
+    Button:
+        id: save_user_button
+        text: 'Save'
+        on_press: root.save_user(username_text_input.text)
+        on_press: app.root.switch_screen("main_screen")
+    Button:
+        id: cancel_save_button
+        text: 'Cancel'
+        on_press: app.root.switch_screen("main_screen")
+
+<Button>:
+    size_hint_y: None
+    height: '50dp'
+
+<TextInput>:
+    size_hint_y: None
+    height: '50dp'
+
+<Label>:
+    size_hint_y: None
+    height: '50dp'
+
+<FaceImage>:
+    size_hint_y: None
+    height: '100dp'
+    padding_x: self.width/2
+
